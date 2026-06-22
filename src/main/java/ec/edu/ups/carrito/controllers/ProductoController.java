@@ -10,6 +10,7 @@ import ec.edu.ups.carrito.views.ActualizarProductoView;
 import ec.edu.ups.carrito.views.BuscarProductoView;
 import ec.edu.ups.carrito.views.CrearProductoView;
 import ec.edu.ups.carrito.views.EliminarProductoView;
+import ec.edu.ups.carrito.views.ListarProductosView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -27,10 +28,11 @@ public class ProductoController {
     private BuscarProductoView buscarProductoView;
     private EliminarProductoView eliminarProductoView;
     private ActualizarProductoView actualizarProductoView;
+    private ListarProductosView listarProductoView;
 
 
     public ProductoController ( CrearProductoView crearProductoView, ProductoDAO productoDAO, BuscarProductoView buscarProductoView,
-       EliminarProductoView eliminarProductoView,  ActualizarProductoView actualizarProductoView    
+       EliminarProductoView eliminarProductoView,  ActualizarProductoView actualizarProductoView, ListarProductosView listarProductoView    
             
     ) {
         
@@ -39,11 +41,12 @@ public class ProductoController {
         this.buscarProductoView = buscarProductoView;
         this.eliminarProductoView = eliminarProductoView;
         this.actualizarProductoView =  actualizarProductoView;
+        this.listarProductoView = listarProductoView;
         configurarEventosCrearProducto();
         configurarEventosBuscarProductos();
         configurarEventosEliminarProductos();
         configurarEventosActualizarProductos();
-        
+        configurarEventosListarProducto();
     }
  
     public void crearProducto(){
@@ -95,21 +98,22 @@ public class ProductoController {
         int codigo = Integer.parseInt(eliminarProductoView.getTxtEliminarProducto().getText());
         
         Producto p = productoDAO.buscar(codigo);
+        
         if (p != null){
+            
             eliminarProductoView.mostrarProducto(p);
-            int respuesta = JOptionPane.showConfirmDialog(
-            null,
-            "¿Deseas eliminar?\n" ,
-            "Confirmar eliminación",
-            JOptionPane.YES_NO_OPTION);
+            
+            int respuesta = JOptionPane.showConfirmDialog( null,"¿Deseas eliminar?\n" ,"Confirmar eliminación", JOptionPane.YES_NO_OPTION);
+            
             if (respuesta == JOptionPane.YES_OPTION){
                  productoDAO.Eliminar(codigo);
                  JOptionPane.showMessageDialog(null, "Producto eliminado");
+                 listarProducto();
             }
         
         }
         
-        } 
+    } 
     public void configurarEventosEliminarProductos(){
         eliminarProductoView.getBtnAceptarEliminar().addActionListener(new  ActionListener() {
             @Override
@@ -123,16 +127,32 @@ public class ProductoController {
     
      public void actualizarProducto(){
         int codigoB = Integer.parseInt(actualizarProductoView.getTxtCodigoBuscar().getText());
-        int codigo = Integer.parseInt(actualizarProductoView.getTxtActualizarProducto().getText());
+        
         String nombre = actualizarProductoView.getTxtNombreA().getText();
         double precio = Double.parseDouble(actualizarProductoView.getTxtPrecioA().getText());
-        Producto producto =  new Producto(codigo , nombre , precio);
+        Producto producto =  new Producto(codigoB, nombre , precio);
             
-        productoDAO.actualizar(codigoB, producto);
+        productoDAO.actualizar( producto);
+        listarProducto();
         JOptionPane.showMessageDialog(null, "Producto actualizado correctamente ");
 
         
     }
+     public void listarProducto(){
+        List<Producto> listaActualizada = productoDAO.listar();
+        listarProductoView.cargarDatos(listaActualizada);
+    }
+     
+     public void configurarEventosListarProducto(){
+         listarProductoView.getBtnListar().addActionListener(new ActionListener() {
+             @Override
+             public void actionPerformed(ActionEvent e) {
+                listarProducto();
+             }
+             
+         });
+     }
+     
      public void configurarEventosActualizarProductos(){
         actualizarProductoView.getBtnActualizarP().addActionListener(new ActionListener(){
             @Override

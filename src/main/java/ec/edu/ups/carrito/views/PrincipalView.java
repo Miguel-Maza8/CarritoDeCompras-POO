@@ -22,6 +22,7 @@ public class PrincipalView extends javax.swing.JFrame {
     private EliminarProductoView eliminarProductoView;
     private ActualizarProductoView actualizarProductoView;
     private ProductoDAO productoDAO;
+    private ListarProductosView listarProductosView;
     // Cualquier codigo va despues del initComponet ç
     
     /**
@@ -35,7 +36,8 @@ public class PrincipalView extends javax.swing.JFrame {
          buscarProductoView = new BuscarProductoView();
          eliminarProductoView = new EliminarProductoView();
          actualizarProductoView = new ActualizarProductoView();
-         productoController = new ProductoController(crearProductoView, productoDAO, buscarProductoView,eliminarProductoView,actualizarProductoView );
+         listarProductosView = new ListarProductosView();
+         productoController = new ProductoController(crearProductoView, productoDAO, buscarProductoView,eliminarProductoView,actualizarProductoView,listarProductosView );
         
         
     }
@@ -56,6 +58,7 @@ public class PrincipalView extends javax.swing.JFrame {
         buscarProductoItem = new javax.swing.JMenuItem();
         eliminarProductoItem = new javax.swing.JMenuItem();
         actualizarProductoMenuItem = new javax.swing.JMenuItem();
+        listarProductosMenuItem = new javax.swing.JMenuItem();
         agregarProductoCarrito = new javax.swing.JMenu();
         cutMenuItem = new javax.swing.JMenuItem();
         eliminarProductoCarrito = new javax.swing.JMenuItem();
@@ -84,6 +87,11 @@ public class PrincipalView extends javax.swing.JFrame {
         actualizarProductoMenuItem.setText("Actualizar");
         actualizarProductoMenuItem.addActionListener(this::actualizarProductoMenuItemActionPerformed);
         fileMenu.add(actualizarProductoMenuItem);
+
+        listarProductosMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        listarProductosMenuItem.setText("Listar");
+        listarProductosMenuItem.addActionListener(this::listarProductosMenuItemActionPerformed);
+        fileMenu.add(listarProductosMenuItem);
 
         menuBar.add(fileMenu);
 
@@ -158,6 +166,15 @@ public class PrincipalView extends javax.swing.JFrame {
 // TODO add your handling code here:
     }//GEN-LAST:event_eliminarProductoItemActionPerformed
 
+    private void listarProductosMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarProductosMenuItemActionPerformed
+        if(!listarProductosView.isVisible()){    
+                    desktopPane.remove(listarProductosView);
+                    listarProductosView.setVisible(true);
+                    desktopPane.add(listarProductosView);            
+        }
+// TODO add your handling code here:
+    }//GEN-LAST:event_listarProductosMenuItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -203,6 +220,7 @@ public class PrincipalView extends javax.swing.JFrame {
     private javax.swing.JMenuItem eliminarProductoItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenuItem lblcrearProductoItem;
+    private javax.swing.JMenuItem listarProductosMenuItem;
     private javax.swing.JMenuBar menuBar;
     // End of variables declaration//GEN-END:variables
 

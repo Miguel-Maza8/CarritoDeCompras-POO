@@ -107,9 +107,12 @@ public class BuscarProductoView extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Nombre");
 
+        txtMostrarNombre.setEditable(false);
         txtMostrarNombre.addActionListener(this::txtMostrarNombreActionPerformed);
 
         jLabel4.setText("Precio");
+
+        txtMostrarPrecio.setEditable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

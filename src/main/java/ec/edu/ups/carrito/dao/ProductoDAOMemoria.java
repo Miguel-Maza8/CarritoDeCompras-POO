@@ -38,10 +38,10 @@ public class ProductoDAOMemoria implements ProductoDAO{
     }
 
     @Override
-    public void actualizar(int codigo, Producto producto) {
+    public void actualizar( Producto producto) {
      for( int i = 0 ; i< lista.size();i++){
          Producto productoEncontrado = lista.get(i);
-         if( productoEncontrado.getCodigo() == codigo){
+         if( productoEncontrado.getCodigo() == producto.getCodigo()){
              lista.set(i, producto);
              break;
          }
@@ -59,6 +59,11 @@ public class ProductoDAOMemoria implements ProductoDAO{
          return productoEncontrado;
      }
      return null;
+    }
+
+    @Override
+    public List<Producto> listar() {
+       return lista;
     }
     
     }
